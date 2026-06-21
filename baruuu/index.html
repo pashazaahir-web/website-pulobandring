@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Skrining TB Puskesmas</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f4f8fb;
+}
+
+/* HEADER */
+
+.hero{
+    background:linear-gradient(135deg,#0F4C81,#00A86B);
+    color:white;
+    padding:25px;
+    border-radius:0 0 25px 25px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logo-area img{
+    width:80px;
+    height:80px;
+    background:white;
+    border-radius:12px;
+    padding:8px;
+}
+
+.logo-area h1{
+    font-size:24px;
+}
+
+.logo-area p{
+    opacity:.9;
+}
+
+/* CONTAINER */
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+/* CARD */
+
+.card{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    margin-top:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+/* INPUT */
+
+input[type=text],
+input[type=number],
+select{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    margin-bottom:15px;
+    border:1px solid #ddd;
+    border-radius:10px;
+}
+
+/* BUTTON */
+
+.btn{
+    width:100%;
+    background:#0F4C81;
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.btn:hover{
+    opacity:.9;
+}
+
+/* PROGRESS */
+
+.progress{
+    width:100%;
+    height:10px;
+    background:#ddd;
+    border-radius:20px;
+    margin-bottom:20px;
+}
+
+.progress-bar{
+    height:100%;
+    width:25%;
+    background:#00A86B;
+    border-radius:20px;
+    transition:.3s;
+}
+
+/* QUESTION */
+
+.question{
+    display:none;
+}
+
+.active{
+    display:block;
+}
+
+.question h3{
+    margin-bottom:15px;
+}
+
+/* TABLE */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+table th{
+    background:#0F4C81;
+    color:white;
+}
+
+table th,
+table td{
+    padding:12px;
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+.status-rendah{
+    color:green;
+    font-weight:bold;
+}
+
+.status-tinggi{
+    color:red;
+    font-weight:bold;
+}
+
+footer{
+    text-align:center;
+    margin:30px;
+    color:#777;
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="hero">
+
+<div class="logo-area">
+
+<img src="logo-puskesmas.png" alt="Logo Puskesmas">
+
+<div>
+<h1>Sistem Skrining Tuberkulosis (TB)</h1>
+<p>Puskesmas Digital • Deteksi Dini TB</p>
+</div>
+
+</div>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Data Pasien</h2>
+
+<input type="text" id="nama" placeholder="Nama Lengkap">
+
+<input type="number" id="umur" placeholder="Umur">
+
+<select id="jk">
+<option>Laki-laki</option>
+<option>Perempuan</option>
+</select>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<!-- P1 -->
+
+<div class="question active" id="q1">
+
+<h3>🩺 Pertanyaan 1</h3>
+
+<p>Apakah batuk sudah berlangsung selama 2 minggu atau lebih?</p>
+
+<br>
+
+<label><input type="radio" name="p1" value="Ya"> Ya</label>
+<br>
+<label><input type="radio" name="p1" value="Tidak"> Tidak</label>
+
+<br><br>
+
+<button class="btn" onclick="nextQuestion(1)">
+Lanjut
+</button>
+
+</div>
+
+<!-- P2 -->
+
+<div class="question" id="q2">
+
+<h3>🩺 Pertanyaan 2</h3>
+
+<p>Apakah batuk tersebut pernah disertai bercak darah?</p>
+
+<br>
+
+<label><input type="radio" name="p2" value="Ya"> Ya</label>
+<br>
+<label><input type="radio" name="p2" value="Tidak"> Tidak</label>
+
+<br><br>
+
+<button class="btn" onclick="nextQuestion(2)">
+Lanjut
+</button>
+
+</div>
+
+<!-- P3 -->
+
+<div class="question" id="q3">
+
+<h3>🩺 Pertanyaan 3</h3>
+
+<p>Dalam 2 bulan terakhir, apakah berat badan turun drastis atau sering berkeringat di malam hari padahal cuaca tidak panas?</p>
+
+<br>
+
+<label><input type="radio" name="p3" value="Ya"> Ya</label>
+<br>
+<label><input type="radio" name="p3" value="Tidak"> Tidak</label>
+
+<br><br>
+
+<button class="btn" onclick="nextQuestion(3)">
+Lanjut
+</button>
+
+</div>
+
+<!-- P4 -->
+
+<div class="question" id="q4">
+
+<h3>🩺 Pertanyaan 4</h3>
+
+<p>Apakah Anda tinggal serumah atau sering berinteraksi dekat dengan pasien yang positif TB?</p>
+
+<br>
+
+<label><input type="radio" name="p4" value="Ya"> Ya</label>
+<br>
+<label><input type="radio" name="p4" value="Tidak"> Tidak</label>
+
+<br><br>
+
+<button class="btn" onclick="simpanData()">
+Kirim Jawaban
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Dashboard Petugas</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Nama</th>
+<th>Umur</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody id="dataAdmin">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 Puskesmas Digital - Sistem Skrining TB
+</footer>
+
+<script>
+
+function nextQuestion(no){
+
+document.getElementById("q"+no).classList.remove("active");
+document.getElementById("q"+(no+1)).classList.add("active");
+
+let persen = ((no+1)/4)*100;
+
+document.getElementById("progressBar").style.width =
+persen+"%";
+
+}
+
+function simpanData(){
+
+let nama =
+document.getElementById("nama").value;
+
+let umur =
+document.getElementById("umur").value;
+
+let p1 =
+document.querySelector('input[name="p1"]:checked')?.value || "";
+
+let p2 =
+document.querySelector('input[name="p2"]:checked')?.value || "";
+
+let p3 =
+document.querySelector('input[name="p3"]:checked')?.value || "";
+
+let p4 =
+document.querySelector('input[name="p4"]:checked')?.value || "";
+
+let skor=0;
+
+if(p1==="Ya") skor++;
+if(p2==="Ya") skor++;
+if(p3==="Ya") skor++;
+if(p4==="Ya") skor++;
+
+let status =
+skor >=2 ?
+"Perlu Pemeriksaan Lanjutan" :
+"Risiko Rendah";
+
+let data =
+JSON.parse(localStorage.getItem("tb")) || [];
+
+data.push({
+nama,
+umur,
+status
+});
+
+localStorage.setItem("tb",
+JSON.stringify(data));
+
+alert("Data berhasil dikirim");
+
+tampilData();
+
+location.reload();
+
+}
+
+function tampilData(){
+
+let data =
+JSON.parse(localStorage.getItem("tb")) || [];
+
+let isi="";
+
+data.forEach(item=>{
+
+let warna =
+item.status==="Risiko Rendah"
+?
+"status-rendah"
+:
+"status-tinggi";
+
+isi += `
+<tr>
+<td>${item.nama}</td>
+<td>${item.umur}</td>
+<td class="${warna}">
+${item.status}
+</td>
+</tr>
+`;
+
+});
+
+document.getElementById("dataAdmin").innerHTML =
+isi;
+
+}
+
+tampilData();
+
+</script>
+
+</body>
+</html>
